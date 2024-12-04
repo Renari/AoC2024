@@ -25,7 +25,7 @@ for (var y = 0; y < lines.Length; y++)
             if (match) xmasInstances++;
         }
         // check if XMAS is to the left
-        if (x - 3 >= 0) // make sure this check won't escape bounds
+        if (x >= 3) // make sure this check won't escape bounds
         {
             var match = lines[y][x - 1] == 'M';
             if (lines[y][x - 2] != 'A') match = false;
@@ -33,7 +33,7 @@ for (var y = 0; y < lines.Length; y++)
             if (match) xmasInstances++;
         }
         // check if XMAS is up
-        if (y - 3 >= 0) // make sure this check won't escape bounds
+        if (y >= 3) // make sure this check won't escape bounds
         {
             var match = lines[y - 1][x] == 'M';
             if (lines[y - 2][x] != 'A') match = false;
@@ -49,7 +49,7 @@ for (var y = 0; y < lines.Length; y++)
             if (match) xmasInstances++;
         }
         // check if XMAS is diagonal up right (this is a combination of up and right patterns above)
-        if (x + 3 < lines[y].Length && y - 3 >= 0) // make sure this check won't escape bounds
+        if (x + 3 < lines[y].Length && y >= 3) // make sure this check won't escape bounds
         {
             var match = lines[y - 1][x + 1] == 'M';
             if (lines[y - 2][x + 2] != 'A') match = false;
@@ -57,7 +57,7 @@ for (var y = 0; y < lines.Length; y++)
             if (match) xmasInstances++;
         }
         // check if XMAS is diagonal up left (this is a combination of up and left patterns above)
-        if (x - 3 >= 0 && y - 3 >= 0) // make sure this check won't escape bounds
+        if (x >= 3 && y >= 3) // make sure this check won't escape bounds
         {
             var match = lines[y - 1][x - 1] == 'M';
             if (lines[y - 2][x - 2] != 'A') match = false;
@@ -73,7 +73,7 @@ for (var y = 0; y < lines.Length; y++)
             if (match) xmasInstances++;
         }
         // check if XMAS is diagonal down left (this is a combination of down and left patterns above)
-        if (x - 3 >= 0 && y + 3 < lines.Length) // make sure this check won't escape bounds
+        if (x >= 3 && y + 3 < lines.Length) // make sure this check won't escape bounds
         {
             var match = lines[y + 1][x - 1] == 'M';
             if (lines[y + 2][x - 2] != 'A') match = false;
