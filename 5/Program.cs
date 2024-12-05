@@ -33,9 +33,9 @@ while (sr.ReadLine() is { } line)
     
     // line contains a printing order
     var pages = line.Split(',').Select(int.Parse).ToArray();
+    var middle = pages.Length / 2;
     if (IsValidPrintingOrder(pages))
     {
-        var middle = pages.Length / 2;
         medianSum += pages[middle];
     }
     else
@@ -45,7 +45,6 @@ while (sr.ReadLine() is { } line)
         {
             fixedOrder = FixInvalidPageOrder(fixedOrder);
         }
-        var middle = pages.Length / 2;
         fixedMedianSum += fixedOrder[middle];
     }
 }
