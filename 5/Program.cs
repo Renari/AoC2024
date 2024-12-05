@@ -35,7 +35,6 @@ while (sr.ReadLine() is { } line)
     var pages = line.Split(',').Select(int.Parse).ToArray();
     if (IsValidPrintingOrder(pages))
     {
-        //Console.WriteLine($"Valid Rule: {string.Join(',', pages)}");
         var middle = pages.Length / 2;
         medianSum += pages[middle];
     }
