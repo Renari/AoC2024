@@ -12,7 +12,6 @@ var safeCountWithDampener = 0;
 while (sr.ReadLine() is { } line)
 {
     var numbers = line.Split(' ').Select(int.Parse).ToArray();
-    var descending = numbers[0] > numbers[1];
     if (CheckSafety(numbers))
     {
         safeCount++;

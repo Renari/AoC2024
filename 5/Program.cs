@@ -70,7 +70,7 @@ bool IsValidPrintingOrder(int[] order)
     return true;
 }
 
-// only fixes the first invalid occurance found
+// only fixes the first invalid occurrence found
 int[] FixInvalidPageOrder(int[] order)
 {
     var list = new ObservableCollection<int>(order);
