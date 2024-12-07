@@ -1,9 +1,5 @@
-﻿Console.WriteLine($"Part 1: {Part1()}");
-var watch = System.Diagnostics.Stopwatch.StartNew();
+Console.WriteLine($"Part 1: {Part1()}");
 Console.WriteLine($"Part 2: {Part2()}");
-watch.Stop();
-var elapsedMs = watch.ElapsedMilliseconds;
-Console.WriteLine($"Part 2: {elapsedMs}");
 
 return;
 
@@ -173,6 +169,8 @@ int Part2()
         
         break;
     }
+    
+    positionsTraversed.Add(currentPosition);
 
     var leftGrid = false;
     while (!leftGrid)
