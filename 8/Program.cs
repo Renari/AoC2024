@@ -39,16 +39,16 @@ foreach (var antenna in antennas)
         for (var j = i + 1; j < locations.Count; j++)
         {
             // calculate anitnodes for these two antenna
-            var distance = DistanceBetweenTwoPoints(locations[i], locations[j]);
+            var (distanceY, distanceX) = DistanceBetweenTwoPoints(locations[i], locations[j]);
             // location[i] is further north
             if (locations[i].Item1 < locations[j].Item1)
             {
                 if (locations[i].Item2 < locations[j].Item2)
                 {
-                    var antinodeY1Offset = -distance.Item1;
-                    var antinodeX1Offset = -distance.Item2;
-                    var antinodeY1 = locations[i].Item1 - distance.Item1;
-                    var antinodeX1 = locations[i].Item2 - distance.Item2;
+                    var antinodeY1Offset = -distanceY;
+                    var antinodeX1Offset = -distanceX;
+                    var antinodeY1 = locations[i].Item1 - distanceY;
+                    var antinodeX1 = locations[i].Item2 - distanceX;
                     var pass = 0;
                     while (CheckAntinodeValidity((antinodeY1, antinodeX1)))
                     {
@@ -61,10 +61,9 @@ foreach (var antenna in antennas)
                         antinodeX1 += antinodeX1Offset;
                         pass++;
                     }
-                    var antinodeY2Offset = distance.Item1;
-                    var antinodeX2Offset = distance.Item2;
-                    var antinodeY2 = locations[j].Item1 + distance.Item1;
-                    var antinodeX2 = locations[j].Item2 + distance.Item2;
+
+                    var antinodeY2 = locations[j].Item1 + distanceY;
+                    var antinodeX2 = locations[j].Item2 + distanceX;
                     pass = 0;
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
@@ -73,17 +72,16 @@ foreach (var antenna in antennas)
 #if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY2}, {antinodeX2})");
 #endif
-                        antinodeY2 += antinodeY2Offset;
-                        antinodeX2 += antinodeX2Offset;
+                        antinodeY2 += distanceY;
+                        antinodeX2 += distanceX;
                         pass++;
                     }
                 }
                 else
                 {
-                    var antinodeY1Offset = -distance.Item1;
-                    var antinodeX1Offset = distance.Item2;
-                    var antinodeY1 = locations[i].Item1 - distance.Item1;
-                    var antinodeX1 = locations[i].Item2 + distance.Item2;
+                    var antinodeY1Offset = -distanceY;
+                    var antinodeY1 = locations[i].Item1 - distanceY;
+                    var antinodeX1 = locations[i].Item2 + distanceX;
                     var pass = 0;
                     while (CheckAntinodeValidity((antinodeY1, antinodeX1)))
                     {
@@ -93,13 +91,13 @@ foreach (var antenna in antennas)
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY1}, {antinodeX1})");
 #endif
                         antinodeY1 += antinodeY1Offset;
-                        antinodeX1 += antinodeX1Offset;
+                        antinodeX1 += distanceX;
                         pass++;
                     }
-                    var antinodeY2Offset = distance.Item1;
-                    var antinodeX2Offset = -distance.Item2;
-                    var antinodeY2 = locations[j].Item1 + distance.Item1;
-                    var antinodeX2 = locations[j].Item2 - distance.Item2;
+
+                    var antinodeX2Offset = -distanceX;
+                    var antinodeY2 = locations[j].Item1 + distanceY;
+                    var antinodeX2 = locations[j].Item2 - distanceX;
                     pass = 0;
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
@@ -108,7 +106,7 @@ foreach (var antenna in antennas)
 #if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY2}, {antinodeX2})");
 #endif
-                        antinodeY2 += antinodeY2Offset;
+                        antinodeY2 += distanceY;
                         antinodeX2 += antinodeX2Offset;
                         pass++;
                     }
@@ -121,10 +119,9 @@ foreach (var antenna in antennas)
                 // which should be fine because one of our y distance will be 0
                 if (locations[i].Item2 < locations[j].Item2)
                 {
-                    var antinodeY1Offset = distance.Item1;
-                    var antinodeX1Offset = -distance.Item2;
-                    var antinodeY1 = locations[i].Item1 + distance.Item1;
-                    var antinodeX1 = locations[i].Item2 - distance.Item2;
+                    var antinodeX1Offset = -distanceX;
+                    var antinodeY1 = locations[i].Item1 + distanceY;
+                    var antinodeX1 = locations[i].Item2 - distanceX;
                     // check if the first antinode is off the map
                     while (CheckAntinodeValidity((antinodeY1, antinodeX1)))
                     {
@@ -132,13 +129,13 @@ foreach (var antenna in antennas)
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY1}, {antinodeX1})");
 #endif
                         antinodes.Add((antinodeY1, antinodeX1));
-                        antinodeY1 += antinodeY1Offset;
+                        antinodeY1 += distanceY;
                         antinodeX1 += antinodeX1Offset;
                     }
-                    var antinodeY2Offset = distance.Item1;
-                    var antinodeX2Offset = -distance.Item2;
-                    var antinodeY2 = locations[j].Item1 + distance.Item1;
-                    var antinodeX2 = locations[j].Item2 - distance.Item2;
+
+                    var antinodeX2Offset = -distanceX;
+                    var antinodeY2 = locations[j].Item1 + distanceY;
+                    var antinodeX2 = locations[j].Item2 - distanceX;
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
                         // not off the map, so this is a valid antinode
@@ -146,29 +143,27 @@ foreach (var antenna in antennas)
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY2}, {antinodeX2})");
 #endif
                         antinodes.Add((antinodeY2, antinodeX2));
-                        antinodeY2 += antinodeY2Offset;
+                        antinodeY2 += distanceY;
                         antinodeX2 += antinodeX2Offset;
                     }
                 }
                 else
                 {
-                    var antinodeY1Offset = distance.Item1;
-                    var antinodeX1Offset = distance.Item2;
-                    var antinodeY1 = locations[i].Item1 + distance.Item1;
-                    var antinodeX1 = locations[i].Item2 + distance.Item2;
+                    var antinodeY1 = locations[i].Item1 + distanceY;
+                    var antinodeX1 = locations[i].Item2 + distanceX;
                     while (CheckAntinodeValidity((antinodeY1, antinodeX1)))
                     {
 #if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY1}, {antinodeX1})");
 #endif
                         antinodes.Add((antinodeY1, antinodeX1));
-                        antinodeY1 += antinodeY1Offset;
-                        antinodeX1 += antinodeX1Offset;
+                        antinodeY1 += distanceY;
+                        antinodeX1 += distanceX;
                     }
-                    var antinodeY2Offset = -distance.Item1;
-                    var antinodeX2Offset = -distance.Item2;
-                    var antinodeY2 = locations[j].Item1 - distance.Item1;
-                    var antinodeX2 = locations[j].Item2 - distance.Item2;
+                    var antinodeY2Offset = -distanceY;
+                    var antinodeX2Offset = -distanceX;
+                    var antinodeY2 = locations[j].Item1 - distanceY;
+                    var antinodeX2 = locations[j].Item2 - distanceX;
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
 #if DEBUG_MODE
