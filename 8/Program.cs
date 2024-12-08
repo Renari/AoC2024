@@ -195,6 +195,6 @@ return;
 
 bool CheckAntinodeValidity((int, int) position)
 {
-    // check if the first antinode is off the map
+    // check if the antinode is off the map
     return !(position.Item1 < 0 || position.Item1 >= maxY || position.Item2 < 0 || position.Item2 >= maxX);
 }
