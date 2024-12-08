@@ -1,4 +1,5 @@
-﻿const string input = "input.txt";
+﻿//#define DEBUG_MODE
+const string input = "input.txt";
 
 if (!File.Exists(input))
 {
@@ -53,7 +54,9 @@ foreach (var antenna in antennas)
                     {
                         if (pass == 0) part1Antinodes.Add((antinodeY1, antinodeX1));
                         antinodes.Add((antinodeY1, antinodeX1));
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY1}, {antinodeX1})");
+#endif
                         antinodeY1 += antinodeY1Offset;
                         antinodeX1 += antinodeX1Offset;
                         pass++;
@@ -66,9 +69,10 @@ foreach (var antenna in antennas)
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
                         if (pass == 0) part1Antinodes.Add((antinodeY2, antinodeX2));
-                        grid[antinodeY2][antinodeX2] = '#';
                         antinodes.Add((antinodeY2, antinodeX2));
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY2}, {antinodeX2})");
+#endif
                         antinodeY2 += antinodeY2Offset;
                         antinodeX2 += antinodeX2Offset;
                         pass++;
@@ -84,9 +88,10 @@ foreach (var antenna in antennas)
                     while (CheckAntinodeValidity((antinodeY1, antinodeX1)))
                     {
                         if (pass == 0) part1Antinodes.Add((antinodeY1, antinodeX1));
-                        grid[antinodeY1][antinodeX1] = '#';
                         antinodes.Add((antinodeY1, antinodeX1));
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY1}, {antinodeX1})");
+#endif
                         antinodeY1 += antinodeY1Offset;
                         antinodeX1 += antinodeX1Offset;
                         pass++;
@@ -99,9 +104,10 @@ foreach (var antenna in antennas)
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
                         if (pass == 0) part1Antinodes.Add((antinodeY2, antinodeX2));
-                        grid[antinodeY2][antinodeX2] = '#';
                         antinodes.Add((antinodeY2, antinodeX2));
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY2}, {antinodeX2})");
+#endif
                         antinodeY2 += antinodeY2Offset;
                         antinodeX2 += antinodeX2Offset;
                         pass++;
@@ -122,8 +128,9 @@ foreach (var antenna in antennas)
                     // check if the first antinode is off the map
                     while (CheckAntinodeValidity((antinodeY1, antinodeX1)))
                     {
-                        grid[antinodeY1][antinodeX1] = '#';
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY1}, {antinodeX1})");
+#endif
                         antinodes.Add((antinodeY1, antinodeX1));
                         antinodeY1 += antinodeY1Offset;
                         antinodeX1 += antinodeX1Offset;
@@ -134,9 +141,10 @@ foreach (var antenna in antennas)
                     var antinodeX2 = locations[j].Item2 - distance.Item2;
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
-                        grid[antinodeY2][antinodeX2] = '#';
                         // not off the map, so this is a valid antinode
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY2}, {antinodeX2})");
+#endif
                         antinodes.Add((antinodeY2, antinodeX2));
                         antinodeY2 += antinodeY2Offset;
                         antinodeX2 += antinodeX2Offset;
@@ -150,8 +158,9 @@ foreach (var antenna in antennas)
                     var antinodeX1 = locations[i].Item2 + distance.Item2;
                     while (CheckAntinodeValidity((antinodeY1, antinodeX1)))
                     {
-                        grid[antinodeY1][antinodeX1] = '#';
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY1}, {antinodeX1})");
+#endif
                         antinodes.Add((antinodeY1, antinodeX1));
                         antinodeY1 += antinodeY1Offset;
                         antinodeX1 += antinodeX1Offset;
@@ -162,8 +171,9 @@ foreach (var antenna in antennas)
                     var antinodeX2 = locations[j].Item2 - distance.Item2;
                     while (CheckAntinodeValidity((antinodeY2, antinodeX2)))
                     {
-                        grid[antinodeY2][antinodeX2] = '#';
+#if DEBUG_MODE
                         Console.WriteLine($"antenna {locations[i]} and {locations[j]} added an antinode at ({antinodeY2}, {antinodeX2})");
+#endif
                         antinodes.Add((antinodeY2, antinodeX2));
                         antinodeY2 += antinodeY2Offset;
                         antinodeX2 += antinodeX2Offset;
